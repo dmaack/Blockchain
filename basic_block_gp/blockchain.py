@@ -32,11 +32,11 @@ class Blockchain(object):
 
         block = {
             # TODO
-            'index': len(self.chain) +1,
-            'timestamp': time,
+            'index': len(self.chain) + 1,
+            'timestamp': time(),
             'transactions': self.current_transactions,
             'proof': proof,
-            'previous_hash': previous_hash or self.hash(self.chain[-1]) # is there another way to get the last block? self.last_block
+            'previous_hash': previous_hash or self.hash(self.last_block) # is there another way to get the last block? self.last_block
         }
 
         # Reset the current list of transactions
