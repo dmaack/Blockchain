@@ -55,14 +55,15 @@ class Blockchain(object):
         """
 
         # Use json.dumps to convert json into a string - what does this do? : stringfies
-        string_block = json.dumps(block, sort_keys=true) # sort_keys makes sure that no matter waht, all the keys in the dict turn into a string in alphabetical order
-        # Use hashlib.sha256 to create a hash
-        
+        string_block = json.dumps(block, sort_keys=True) # sort_keys makes sure that no matter waht, all the keys in the dict turn into a string in alphabetical order
+        # Use hashlib.sha256 to create a hash - it returns an object
         # It requires a `bytes-like` object, which is what
         # .encode() does.
+        raw_hash = hashlib.sha256(string_block.encode()) # we want a hexidecimal version
         # It converts the Python string into a byte string.
         # We must make sure that the Dictionary is Ordered,
         # or we'll have inconsistent hashes
+        
 
         # TODO: Create the block_string
 
@@ -73,9 +74,9 @@ class Blockchain(object):
         # This can be hard to read, but .hexdigest() converts the
         # hash to a string of hexadecimal characters, which is
         # easier to work with and understand
-
+        hex_hash = raw_hash.hexdigest()
         # TODO: Return the hashed block string in hexadecimal format
-        pass
+        return hex_hash
 
     @property # its a decorator function - what the property do? acts like a property, not a method
     def last_block(self):
@@ -137,7 +138,8 @@ def mine():
 def full_chain():
     response = {
         # TODO: Return the chain and its current length
-        'message': 'Hello'
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain)
     }
     return jsonify(response), 200
 
