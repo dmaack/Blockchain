@@ -32,12 +32,19 @@ class Blockchain(object):
 
         block = {
             # TODO
+            'index': len(self.chain) +1,
+            'timestamp': time,
+            'transactions': self.current_transactions,
+            'proof': proof,
+            'previous_hash': previous_hash or self.hash(self.chain[-1]) # is there another way to get the last block? self.last_block
         }
 
         # Reset the current list of transactions
-        # Append the chain to the block
+        self.current_transactions = []
+        # Append the block to the chain
+        self.chain.append(block)
         # Return the new block
-        pass
+        return block
 
     def hash(self, block):
         """
@@ -47,8 +54,10 @@ class Blockchain(object):
         "return": <str>
         """
 
-        # Use json.dumps to convert json into a string
+        # Use json.dumps to convert json into a string - what does this do? : stringfies
+        string_block = json.dumps(block, sort_keys=true) # sort_keys makes sure that no matter waht, all the keys in the dict turn into a string in alphabetical order
         # Use hashlib.sha256 to create a hash
+        
         # It requires a `bytes-like` object, which is what
         # .encode() does.
         # It converts the Python string into a byte string.
@@ -68,11 +77,11 @@ class Blockchain(object):
         # TODO: Return the hashed block string in hexadecimal format
         pass
 
-    @property
+    @property # its a decorator function - what the property do? acts like a property, not a method
     def last_block(self):
-        return self.chain[-1]
+        return self.chain[-1] # 
 
-    def proof_of_work(self, block):
+    def proof_of_work(self, block): # what method are we going to use to find the right proof? brut force
         """
         Simple Proof of Work Algorithm
         Stringify the block and look for a proof.
@@ -128,6 +137,7 @@ def mine():
 def full_chain():
     response = {
         # TODO: Return the chain and its current length
+        'message': 'Hello'
     }
     return jsonify(response), 200
 
